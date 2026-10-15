@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="ModdakirTest" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="rootView" id="outlet-view"/>
+                <outlet property="emailTextField" destination="emailField" id="outlet-email"/>
+                <outlet property="passwordTextField" destination="passwordField" id="outlet-password"/>
+                <outlet property="errorLabel" destination="errorLabel" id="outlet-error"/>
+                <outlet property="loginButton" destination="loginButton" id="outlet-login"/>
+                <outlet property="googleContainer" destination="googleBox" id="outlet-google"/>
+                <outlet property="appleContainer" destination="appleBox" id="outlet-apple"/>
+                <outlet property="activityIndicator" destination="spinner" id="outlet-spinner"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="rootView">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fill" alignment="fill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="mainStack">
+                    <rect key="frame" x="24" y="198" width="345" height="456"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="titleLabel">
+                            <rect key="frame" x="0.0" y="0.0" width="345" height="40"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="34"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="emailField">
+                            <rect key="frame" x="0.0" y="52" width="345" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="height-email"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="passwordField">
+                            <rect key="frame" x="0.0" y="112" width="345" height="48"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="48" id="height-password"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="errorLabel">
+                            <rect key="frame" x="0.0" y="172" width="345" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" systemColor="systemRedColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="loginButton">
+                            <rect key="frame" x="0.0" y="205" width="345" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="height-login"/>
+                            </constraints>
+                            <state key="normal" title="Sign In"/>
+                            <buttonConfiguration key="configuration" style="filled" title="Sign In">
+                                <color key="baseForegroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="loginTapped:" destination="-1" eventType="touchUpInside" id="action-login"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or continue with" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="separatorLabel">
+                            <rect key="frame" x="0.0" y="267" width="345" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="googleBox" userLabel="Google Container">
+                            <rect key="frame" x="0.0" y="295" width="345" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="height-google"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="appleBox" userLabel="Apple Container">
+                            <rect key="frame" x="0.0" y="357" width="345" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="height-apple"/>
+                            </constraints>
+                        </view>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="spinner">
+                            <rect key="frame" x="0.0" y="419" width="345" height="37"/>
+                            <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </activityIndicatorView>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="safeArea"/>
+            <color key="backgroundColor" red="0.0" green="0.9727097602739726" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="mainStack" firstAttribute="leading" secondItem="safeArea" secondAttribute="leading" constant="24" id="constraint-leading"/>
+                <constraint firstItem="safeArea" firstAttribute="trailing" secondItem="mainStack" secondAttribute="trailing" constant="24" id="constraint-trailing"/>
+                <constraint firstItem="mainStack" firstAttribute="centerY" secondItem="safeArea" secondAttribute="centerY" id="constraint-centerY"/>
+                <constraint firstItem="mainStack" firstAttribute="top" secondItem="safeArea" secondAttribute="top" relation="greaterThanOrEqual" constant="16" id="constraint-top"/>
+                <constraint firstItem="safeArea" firstAttribute="bottom" secondItem="mainStack" secondAttribute="bottom" relation="greaterThanOrEqual" constant="16" id="constraint-bottom"/>
+            </constraints>
+            <point key="canvasLocation" x="137" y="134"/>
+        </view>
+    </objects>
+</document>
