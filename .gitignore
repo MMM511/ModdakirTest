@@ -35,3 +35,4 @@ Pods/
 # Secrets – Google Sign-In plist (keep local only, add a .sample for the team)
 GoogleService-Info.plist
 GoogleService-Info-*.plist
+xcuserdata/
