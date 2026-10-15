@@ -5,6 +5,9 @@
 //  Created by Hamada Mahmoud on 15/10/2026.
 //
 
+
+//  الكوبري اللي بيحول ال data to domain
+
 import Foundation
 
 enum UserMapping {

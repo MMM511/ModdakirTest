@@ -12,7 +12,6 @@ public enum AuthError: Error, Equatable, Sendable {
     case server(message: String)
     case invalidCredentials
     case cancelled
-    
     case pendingCompletion(missingFields: [String])
     case sessionExpired
     case unknown(message: String)
