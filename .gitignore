@@ -1,0 +1,37 @@
+# Xcode
+DerivedData/
+*.xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+# Build
+build/
+*.o
+*.app
+*.ipa
+*.dSYM.zip
+*.dSYM/
+
+# Swift Package Manager
+.swiftpm/
+.build/
+Packages/
+
+# CocoaPods
+Pods/
+
+# macOS
+.DS_Store
+
+# Secrets – Google Sign-In plist (keep local only, add a .sample for the team)
+GoogleService-Info.plist
+GoogleService-Info-*.plist
