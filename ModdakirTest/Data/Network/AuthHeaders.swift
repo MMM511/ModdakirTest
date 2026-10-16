@@ -8,10 +8,10 @@
 import Foundation
 
 struct AuthHeaders {
-    static let appName = "moddakir"
+    static let appName = "wl_2"
     static let userType = "User_S"
     static let isKidsApp = "false"
-    static let acceptLanguage = "en"
+    static let acceptLanguage = "ar"
 
     static var dictionary: [String: String] {
         [
