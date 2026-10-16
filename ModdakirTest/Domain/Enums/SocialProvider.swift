@@ -8,6 +8,6 @@
 import Foundation
 
 enum SocialProvider: String, Sendable {
-    case google = "GOOGLE"
-    case apple = "APPLE"
+    case google = "Google"
+    case apple = "Apple"
 }

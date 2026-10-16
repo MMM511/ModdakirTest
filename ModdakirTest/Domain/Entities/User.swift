@@ -16,13 +16,16 @@ public struct User: Codable, Equatable, Sendable {
     public let token: String?
     public let isPending: Bool
 
+    public let missingFields: [String]
+
     public init(
         id: String,
         name: String,
         email: String,
         avatarURL: URL? = nil,
         token: String? = nil,
-        isPending: Bool = false
+        isPending: Bool = false,
+        missingFields: [String] = []
     ) {
         self.id = id
         self.name = name
@@ -30,5 +33,6 @@ public struct User: Codable, Equatable, Sendable {
         self.avatarURL = avatarURL
         self.token = token
         self.isPending = isPending
+        self.missingFields = missingFields
     }
 }
