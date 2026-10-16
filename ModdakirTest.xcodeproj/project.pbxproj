@@ -11,8 +11,19 @@
 		807EE3093081110B000D888D /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 807EE3083081110B000D888D /* GoogleSignIn */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		807EE3163081110B000D888D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 807EE27A307FA85F000D888D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 807EE281307FA85F000D888D;
+			remoteInfo = ModdakirTest;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		807EE282307FA85F000D888D /* ModdakirTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ModdakirTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		807EE3103081110B000D888D /* ModdakirTestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModdakirTestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -34,6 +45,11 @@
 			path = ModdakirTest;
 			sourceTree = "<group>";
 		};
+		807EE3173081110B000D888D /* ModdakirTestTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ModdakirTestTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +62,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		807EE3123081110B000D888D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -53,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				807EE284307FA85F000D888D /* ModdakirTest */,
+				807EE3173081110B000D888D /* ModdakirTestTests */,
 				807EE283307FA85F000D888D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				807EE282307FA85F000D888D /* ModdakirTest.app */,
+				807EE3103081110B000D888D /* ModdakirTestTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -92,6 +117,27 @@
 			productReference = 807EE282307FA85F000D888D /* ModdakirTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		807EE3143081110B000D888D /* ModdakirTestTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 807EE3203081110B000D888D /* Build configuration list for PBXNativeTarget "ModdakirTestTests" */;
+			buildPhases = (
+				807EE3113081110B000D888D /* Sources */,
+				807EE3123081110B000D888D /* Frameworks */,
+				807EE3133081110B000D888D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				807EE3153081110B000D888D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				807EE3173081110B000D888D /* ModdakirTestTests */,
+			);
+			name = ModdakirTestTests;
+			productName = "$(TARGET_NAME:c99extidentifier)";
+			productReference = 807EE3103081110B000D888D /* ModdakirTestTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -103,6 +149,9 @@
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					807EE281307FA85F000D888D = {
+						CreatedOnToolsVersion = 26.0.1;
+					};
+					807EE3143081110B000D888D = {
 						CreatedOnToolsVersion = 26.0.1;
 					};
 				};
@@ -126,12 +175,20 @@
 			projectRoot = "";
 			targets = (
 				807EE281307FA85F000D888D /* ModdakirTest */,
+				807EE3143081110B000D888D /* ModdakirTestTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		807EE280307FA85F000D888D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		807EE3133081110B000D888D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -148,7 +205,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		807EE3113081110B000D888D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		807EE3153081110B000D888D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 807EE281307FA85F000D888D /* ModdakirTest */;
+			targetProxy = 807EE3163081110B000D888D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		807EE296307FA861000D888D /* Debug */ = {
@@ -336,6 +408,48 @@
 			};
 			name = Release;
 		};
+		807EE3183081110B000D888D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2MRAJDCYDM;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ModdakirTestTests;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ModdakirTest.app/ModdakirTest";
+			};
+			name = Debug;
+		};
+		807EE3193081110B000D888D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2MRAJDCYDM;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ModdakirTestTests;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ModdakirTest.app/ModdakirTest";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -353,6 +467,15 @@
 			buildConfigurations = (
 				807EE296307FA861000D888D /* Debug */,
 				807EE297307FA861000D888D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		807EE3203081110B000D888D /* Build configuration list for PBXNativeTarget "ModdakirTestTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				807EE3183081110B000D888D /* Debug */,
+				807EE3193081110B000D888D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
