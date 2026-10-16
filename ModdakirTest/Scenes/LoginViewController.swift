@@ -36,24 +36,23 @@ final class LoginViewController: UIViewController {
         let password = passwordTextField.text ?? ""
         setLoading(true)
         Task {
-            let result = await makeEmailLoginUseCase().execute(identifier: identifier, password: password)
+            let result = await AppDependencies.shared.makeEmailLoginUseCase().execute(identifier: identifier, password: password)
             handle(result)
         }
     }
 
     @IBAction private func googleTapped(_ sender: UIButton) {
-        guard let clientID = googleClientID() else {
+        guard let provider = AppDependencies.shared.makeGoogleProvider() else {
             showError("Google sign-in is not configured.")
             return
         }
         hideError()
         setLoading(true)
         Task {
-            let provider = GoogleLoginProvider(clientID: clientID)
             let profile = await provider.signIn(presenting: self)
             switch profile {
             case .success(let value):
-                let result = await makeSocialLoginUseCase().execute(provider: .google, profile: value)
+                let result = await AppDependencies.shared.makeSocialLoginUseCase().execute(provider: .google, profile: value)
                 handle(result)
             case .failure(let error):
                 handle(.failure(error))
@@ -65,11 +64,11 @@ final class LoginViewController: UIViewController {
         hideError()
         setLoading(true)
         Task {
-            let provider = AppleLoginProvider()
+            let provider = AppDependencies.shared.makeAppleProvider()
             let profile = await provider.signIn(presenting: self)
             switch profile {
             case .success(let value):
-                let result = await makeSocialLoginUseCase().execute(provider: .apple, profile: value)
+                let result = await AppDependencies.shared.makeSocialLoginUseCase().execute(provider: .apple, profile: value)
                 handle(result)
             case .failure(let error):
                 handle(.failure(error))
@@ -83,7 +82,7 @@ final class LoginViewController: UIViewController {
         switch result {
         case .success(let user):
             if user.isPending {
-                showError("Your account needs a few more details to be completed.")
+                showError(AuthError.pendingCompletion(missingFields: user.missingFields).userMessage)
             } else {
                 let home = HomeViewController(nibName: "HomeViewController", bundle: nil)
                 home.user = user
@@ -157,33 +156,6 @@ final class LoginViewController: UIViewController {
         view.endEditing(true)
     }
 
-
-    private func makeRepository() -> AuthRepository {
-        let api: AuthAPI = AlamofireAuthAPI()
-        let remote: AuthRemoteDataSource = DefaultAuthRemoteDataSource(
-            api: api,
-            deviceUUID: UIDevice.current.identifierForVendor?.uuidString
-        )
-        let session: SessionStore = KeychainSessionStore()
-        return AuthRepositoryImpl(remote: remote, session: session)
-    }
-
-    private func makeEmailLoginUseCase() -> EmailLoginUseCase {
-        EmailLoginUseCase(repository: makeRepository())
-    }
-
-    private func makeSocialLoginUseCase() -> SocialLoginUseCase {
-        SocialLoginUseCase(repository: makeRepository())
-    }
-
-    private func googleClientID() -> String? {
-        guard let url = Bundle.main.url(forResource: "GoogleService-Info", withExtension: "plist"),
-              let data = try? Data(contentsOf: url),
-              let plist = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any] else {
-            return nil
-        }
-        return plist["CLIENT_ID"] as? String
-    }
 
     private func showError(_ message: String) {
         errorLabel.text = message

@@ -27,9 +27,10 @@ final class HomeViewController: UIViewController {
 
 
     @IBAction private func logoutTapped(_ sender: UIButton) {
-        LogoutUseCase(repository: HomeViewController.makeRepository()).execute()
+        AppDependencies.shared.makeLogoutUseCase().execute()
         GIDSignIn.sharedInstance.signOut()
-        navigationController?.popToRootViewController(animated: true)
+        let login = LoginViewController(nibName: "LoginViewController", bundle: nil)
+        navigationController?.setViewControllers([login], animated: true)
     }
 
 
@@ -57,15 +58,5 @@ final class HomeViewController: UIViewController {
                 self.profileImageView.image = image
             }
         }.resume()
-    }
-
-    private static func makeRepository() -> AuthRepository {
-        let api: AuthAPI = AlamofireAuthAPI()
-        let remote: AuthRemoteDataSource = DefaultAuthRemoteDataSource(
-            api: api,
-            deviceUUID: UIDevice.current.identifierForVendor?.uuidString
-        )
-        let session: SessionStore = KeychainSessionStore()
-        return AuthRepositoryImpl(remote: remote, session: session)
     }
 }
