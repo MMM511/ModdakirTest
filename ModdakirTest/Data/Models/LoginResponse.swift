@@ -8,6 +8,11 @@
 import Foundation
 
 struct LoginResponse: Decodable {
+    let accessToken: String?
+    let consumer: ConsumerDTO?
+}
+
+struct ConsumerDTO: Decodable {
     let id: String?
     let username: String?
     let email: String?

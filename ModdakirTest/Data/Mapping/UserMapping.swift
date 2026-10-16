@@ -11,23 +11,25 @@
 import Foundation
 
 enum UserMapping {
-    static func user(from response: LoginResponse) -> User {
-        let email = response.email ?? ""
-        let name = response.fullName ?? response.username ?? email
+    
+    static func user(from response: LoginResponse) -> User? {
+        guard let consumer = response.consumer else { return nil }
+        let email = consumer.email ?? ""
+        let name = consumer.fullName ?? consumer.username ?? email
         return User(
-            id: response.id ?? response.username ?? email,
+            id: consumer.id ?? consumer.username ?? email,
             name: name.isEmpty ? "User" : name,
             email: email,
-            avatarURL: response.avatarUrl.flatMap(URL.init(string:)),
-            token: nil,
-            isPending: !(response.isRegistrationCompleted ?? true)
+            avatarURL: consumer.avatarUrl.flatMap(URL.init(string:)),
+            token: response.accessToken,
+            isPending: !(consumer.isRegistrationCompleted ?? true)
         )
     }
     
     static func user( from response: SocialLoginResponse,displayName: String?,email: String?, avatarURL: URL?) -> User {
         let resolvedEmail = email ?? ""
         let resolvedName = displayName ?? resolvedEmail
-        return User(id: response.providerUserId ?? UUID().uuidString, name: resolvedName.isEmpty ? "User" : resolvedName,email: resolvedEmail, avatarURL: avatarURL, token: response.accessToken,isPending: response.socialMediaAccountPending
+        return User(id: response.providerUserId ?? UUID().uuidString, name: resolvedName.isEmpty ? "User" : resolvedName,email: resolvedEmail, avatarURL: avatarURL, token: response.accessToken,isPending: response.socialMediaAccountPending, missingFields: response.missingFields
         )
     }
 }

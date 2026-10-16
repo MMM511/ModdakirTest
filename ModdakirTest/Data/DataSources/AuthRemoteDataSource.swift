@@ -29,7 +29,12 @@ final class DefaultAuthRemoteDataSource: AuthRemoteDataSource {
 
     func login(identifier: String, password: String) async -> Result<User, AuthError> {
         let result = await api.login(.credentials(identifier: identifier, password: password))
-        return result.map(UserMapping.user(from:))
+        return result.flatMap { payload in
+            guard let user = UserMapping.user(from: payload) else {
+                return .failure(.server(message: "Empty response from server."))
+            }
+            return .success(user)
+        }
     }
 
     func socialLogin(
