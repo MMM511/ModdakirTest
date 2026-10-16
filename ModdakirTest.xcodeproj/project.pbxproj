@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		807EE3063081110B000D888D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 807EE3053081110B000D888D /* Alamofire */; };
+		807EE3093081110B000D888D /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 807EE3083081110B000D888D /* GoogleSignIn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				807EE3063081110B000D888D /* Alamofire in Frameworks */,
+				807EE3093081110B000D888D /* GoogleSignIn in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +86,7 @@
 			name = ModdakirTest;
 			packageProductDependencies = (
 				807EE3053081110B000D888D /* Alamofire */,
+				807EE3083081110B000D888D /* GoogleSignIn */,
 			);
 			productName = ModdakirTest;
 			productReference = 807EE282307FA85F000D888D /* ModdakirTest.app */;
@@ -115,6 +118,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				807EE3043081110B000D888D /* XCRemoteSwiftPackageReference "Alamofire" */,
+				807EE3073081110B000D888D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 807EE283307FA85F000D888D /* Products */;
@@ -152,6 +156,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ModdakirTest/ModdakirTest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2MRAJDCYDM;
@@ -183,6 +188,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ModdakirTest/ModdakirTest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2MRAJDCYDM;
@@ -362,6 +368,14 @@
 				minimumVersion = 5.12.2;
 			};
 		};
+		807EE3073081110B000D888D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -369,6 +383,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 807EE3043081110B000D888D /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		807EE3083081110B000D888D /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 807EE3073081110B000D888D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
