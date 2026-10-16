@@ -5,6 +5,7 @@
 //  Created by Hamada Mahmoud on 15/10/2026.
 //
 
+import AuthenticationServices
 import UIKit
 
 final class LoginViewController: UIViewController {
@@ -14,7 +15,7 @@ final class LoginViewController: UIViewController {
     @IBOutlet private weak var passwordTextField: UITextField!
     @IBOutlet private weak var errorLabel: UILabel!
     @IBOutlet private weak var loginButton: UIButton!
-    @IBOutlet private weak var googleContainer: UIView!
+    @IBOutlet private weak var googleButton: UIButton!
     @IBOutlet private weak var appleContainer: UIView!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
 
@@ -22,24 +23,85 @@ final class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureFields()
-        configureSocialPlaceholders()
+        configureSocialButtons()
         configureDismissKeyboard()
         activityIndicator.hidesWhenStopped = true
     }
 
- 
+
 
     @IBAction private func loginTapped(_ sender: UIButton) {
-        guard validateInput() else { return }
-        showError("Sign-in is not wired yet.")
+        hideError()
+        let identifier = emailTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
+        setLoading(true)
+        Task {
+            let result = await makeEmailLoginUseCase().execute(identifier: identifier, password: password)
+            handle(result)
+        }
     }
 
-    @objc private func googleTapped() {
-        showError("Google sign-in is not wired yet.")
+    @IBAction private func googleTapped(_ sender: UIButton) {
+        guard let clientID = googleClientID() else {
+            showError("Google sign-in is not configured.")
+            return
+        }
+        hideError()
+        setLoading(true)
+        Task {
+            let provider = GoogleLoginProvider(clientID: clientID)
+            let profile = await provider.signIn(presenting: self)
+            switch profile {
+            case .success(let value):
+                let result = await makeSocialLoginUseCase().execute(provider: .google, profile: value)
+                handle(result)
+            case .failure(let error):
+                handle(.failure(error))
+            }
+        }
     }
 
     @objc private func appleTapped() {
-        showError("Apple sign-in is not wired yet.")
+        hideError()
+        setLoading(true)
+        Task {
+            let provider = AppleLoginProvider()
+            let profile = await provider.signIn(presenting: self)
+            switch profile {
+            case .success(let value):
+                let result = await makeSocialLoginUseCase().execute(provider: .apple, profile: value)
+                handle(result)
+            case .failure(let error):
+                handle(.failure(error))
+            }
+        }
+    }
+
+
+    private func handle(_ result: Result<User, AuthError>) {
+        setLoading(false)
+        switch result {
+        case .success(let user):
+            if user.isPending {
+                showError("Your account needs a few more details to be completed.")
+            } else {
+                // TODO: Navigate to Home once HomeViewController lands.
+                showError("Signed in as \(user.name). Home screen is next.")
+            }
+        case .failure(let error):
+            showError(error.userMessage)
+        }
+    }
+
+    private func setLoading(_ loading: Bool) {
+        if loading {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
+        loginButton.isEnabled = !loading
+        emailTextField.isEnabled = !loading
+        passwordTextField.isEnabled = !loading
     }
 
 
@@ -60,47 +122,32 @@ final class LoginViewController: UIViewController {
     }
 
     
-    private func configureSocialPlaceholders() {
-        let googleButton = makePlaceholderButton(
-            title: "Continue with Google",
-            backgroundColor: .white,
-            foregroundColor: .black,
-            action: #selector(googleTapped)
-        )
-        let appleButton = makePlaceholderButton(
-            title: "Continue with Apple",
-            backgroundColor: .black,
-            foregroundColor: .white,
-            action: #selector(appleTapped)
-        )
-        embed(googleButton, in: googleContainer)
+   
+    /// Styles the XIB-designed Google button and fills the Apple container
+    /// with the official Apple button. The Google flow itself still runs
+    /// through `GoogleLoginProvider` — only the button widget changed.
+    private func configureSocialButtons() {
+        googleButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
+        if var configuration = googleButton.configuration {
+            configuration.imagePadding = 12
+            configuration.cornerStyle = .medium
+            googleButton.configuration = configuration
+        }
+
+        let appleButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
+        appleButton.cornerRadius = 8
+        appleButton.addTarget(self, action: #selector(appleTapped), for: .touchUpInside)
         embed(appleButton, in: appleContainer)
     }
 
-    private func makePlaceholderButton(
-        title: String,
-        backgroundColor: UIColor,
-        foregroundColor: UIColor,
-        action: Selector
-    ) -> UIButton {
-        var configuration = UIButton.Configuration.filled()
-        configuration.title = title
-        configuration.baseBackgroundColor = backgroundColor
-        configuration.baseForegroundColor = foregroundColor
-        configuration.cornerStyle = .medium
-        let button = UIButton(configuration: configuration, primaryAction: nil)
-        button.addTarget(self, action: action, for: .touchUpInside)
-        return button
-    }
-
-    private func embed(_ button: UIButton, in container: UIView) {
-        button.translatesAutoresizingMaskIntoConstraints = false
-        container.addSubview(button)
+    private func embed(_ control: UIControl, in container: UIView) {
+        control.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(control)
         NSLayoutConstraint.activate([
-            button.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            button.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            button.topAnchor.constraint(equalTo: container.topAnchor),
-            button.bottomAnchor.constraint(equalTo: container.bottomAnchor)
+            control.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            control.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            control.topAnchor.constraint(equalTo: container.topAnchor),
+            control.bottomAnchor.constraint(equalTo: container.bottomAnchor)
         ])
     }
 
@@ -115,19 +162,31 @@ final class LoginViewController: UIViewController {
     }
 
 
-    private func validateInput() -> Bool {
-        let email = emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        let password = passwordTextField.text ?? ""
-        if email.isEmpty || !email.contains("@") {
-            showError("Please enter a valid email address.")
-            return false
+    private func makeRepository() -> AuthRepository {
+        let api: AuthAPI = AlamofireAuthAPI()
+        let remote: AuthRemoteDataSource = DefaultAuthRemoteDataSource(
+            api: api,
+            deviceUUID: UIDevice.current.identifierForVendor?.uuidString
+        )
+        let session: SessionStore = KeychainSessionStore()
+        return AuthRepositoryImpl(remote: remote, session: session)
+    }
+
+    private func makeEmailLoginUseCase() -> EmailLoginUseCase {
+        EmailLoginUseCase(repository: makeRepository())
+    }
+
+    private func makeSocialLoginUseCase() -> SocialLoginUseCase {
+        SocialLoginUseCase(repository: makeRepository())
+    }
+
+    private func googleClientID() -> String? {
+        guard let url = Bundle.main.url(forResource: "GoogleService-Info", withExtension: "plist"),
+              let data = try? Data(contentsOf: url),
+              let plist = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any] else {
+            return nil
         }
-        if password.isEmpty {
-            showError("Please enter your password.")
-            return false
-        }
-        hideError()
-        return true
+        return plist["CLIENT_ID"] as? String
     }
 
     private func showError(_ message: String) {

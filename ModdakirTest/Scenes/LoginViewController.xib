@@ -14,7 +14,7 @@
                 <outlet property="passwordTextField" destination="passwordField" id="outlet-password"/>
                 <outlet property="errorLabel" destination="errorLabel" id="outlet-error"/>
                 <outlet property="loginButton" destination="loginButton" id="outlet-login"/>
-                <outlet property="googleContainer" destination="googleBox" id="outlet-google"/>
+                <outlet property="googleButton" destination="googleButton" id="outlet-google"/>
                 <outlet property="appleContainer" destination="appleBox" id="outlet-apple"/>
                 <outlet property="activityIndicator" destination="spinner" id="outlet-spinner"/>
             </connections>
@@ -75,12 +75,20 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="googleBox" userLabel="Google Container">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="googleButton">
                             <rect key="frame" x="0.0" y="295" width="345" height="50"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="height-google"/>
+                                <constraint firstAttribute="height" constant="50" id="height-googleBtn"/>
                             </constraints>
-                        </view>
+                            <state key="normal" title="Continue with Google" image="googleIcon"/>
+                            <buttonConfiguration key="configuration" style="filled" title="Continue with Google" image="googleIcon">
+                                <color key="baseForegroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </buttonConfiguration>
+                            <connections>
+                                <action selector="googleTapped:" destination="-1" eventType="touchUpInside" id="action-google"/>
+                            </connections>
+                        </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="appleBox" userLabel="Apple Container">
                             <rect key="frame" x="0.0" y="357" width="345" height="50"/>
                             <constraints>
