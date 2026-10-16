@@ -14,6 +14,7 @@ public enum AuthError: Error, Equatable, Sendable {
     case cancelled
     case pendingCompletion(missingFields: [String])
     case sessionExpired
+    case validation(message: String)
     case unknown(message: String)
 }
 
@@ -36,6 +37,8 @@ public extension AuthError {
             return "Your account is pending completion: \(missingFields.joined(separator: ", "))."
         case .sessionExpired:
             return "Your session has expired. Please sign in again."
+        case .validation(let message):
+            return message
         case .unknown(let message):
             return message
         }
