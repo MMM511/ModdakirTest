@@ -85,8 +85,9 @@ final class LoginViewController: UIViewController {
             if user.isPending {
                 showError("Your account needs a few more details to be completed.")
             } else {
-                // TODO: Navigate to Home once HomeViewController lands.
-                showError("Signed in as \(user.name). Home screen is next.")
+                let home = HomeViewController(nibName: "HomeViewController", bundle: nil)
+                home.user = user
+                navigationController?.pushViewController(home, animated: true)
             }
         case .failure(let error):
             showError(error.userMessage)
@@ -120,12 +121,7 @@ final class LoginViewController: UIViewController {
 
         loginButton.titleLabel?.font = .boldSystemFont(ofSize: 17)
     }
-
     
-   
-    /// Styles the XIB-designed Google button and fills the Apple container
-    /// with the official Apple button. The Google flow itself still runs
-    /// through `GoogleLoginProvider` — only the button widget changed.
     private func configureSocialButtons() {
         googleButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .semibold)
         if var configuration = googleButton.configuration {

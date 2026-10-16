@@ -23,9 +23,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     private func makeInitialViewController() -> UIViewController {
-        let login = LoginViewController(nibName: "LoginViewController", bundle: nil)
-        let navigation = UINavigationController(rootViewController: login)
+        let navigation = UINavigationController()
         navigation.isNavigationBarHidden = true
+        // TODO: Move composition to AppDependencies.
+        let api: AuthAPI = AlamofireAuthAPI()
+        let remote: AuthRemoteDataSource = DefaultAuthRemoteDataSource(
+            api: api,
+            deviceUUID: UIDevice.current.identifierForVendor?.uuidString
+        )
+        let repository: AuthRepository = AuthRepositoryImpl(remote: remote, session: KeychainSessionStore())
+        if let user = repository.currentUser(), !user.isPending {
+            let home = HomeViewController(nibName: "HomeViewController", bundle: nil)
+            home.user = user
+            navigation.viewControllers = [home]
+        } else {
+            navigation.viewControllers = [LoginViewController(nibName: "LoginViewController", bundle: nil)]
+        }
         return navigation
     }
 
