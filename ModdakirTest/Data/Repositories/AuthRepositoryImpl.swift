@@ -47,9 +47,8 @@ final class AuthRepositoryImpl: AuthRepository {
     }
 
     private func persist(_ result: Result<User, AuthError>) -> Result<User, AuthError> {
-        if case .success(let user) = result {
-            session.save(user)
-        }
+        guard case .success(let user) = result, !user.isPending else { return result }
+        session.save(user)
         return result
     }
 }
